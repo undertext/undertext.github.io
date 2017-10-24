@@ -7,6 +7,9 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: undertextme
 github_username:  undertext
 
+disqus:
+  shortname: undertext-github-io
+
 # Build settings
 markdown: kramdown
 theme: minima

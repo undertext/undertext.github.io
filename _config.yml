@@ -1,1 +1,15 @@
+# Site settings
+title: An ordinary blog of an ordinary man
+email: undertext.2010@gmail.com
+description: Posts about programming and related stuff
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: undertextme
+github_username:  undertext
+
+# Build settings
+markdown: kramdown
 theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
+

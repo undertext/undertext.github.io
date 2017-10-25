@@ -10,6 +10,8 @@ github_username:  undertext
 disqus:
   shortname: undertext-github-io
 
+google_analytics: UA-28621808-4
+
 # Build settings
 markdown: kramdown
 theme: minima

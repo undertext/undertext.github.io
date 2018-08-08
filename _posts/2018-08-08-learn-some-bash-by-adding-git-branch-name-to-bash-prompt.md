@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Learn some bash by adding git branch name to bash prompt
+title: Learn some bash scripting by adding current git branch name to bash prompt
 ---
 
-Maybe you saw something like this in your terminal:
+Maybe you saw something like this:
 {% highlight bash %}
  04:13 PM:~/www/project (dev) $ 
 {% endhighlight %}
-The terminal is telling what is the current git branch of repository in current directory. 
+The terminal is telling what is the current git branch name of repository in current directory. 
 And maybe you are wondering how it works. Let's implement this functionality!
 
 PS1 environment variable
@@ -15,7 +15,7 @@ PS1 environment variable
 The text that is displayed at the beginning of your command line input is called "primary prompt string"
 and it is controlled by `PS1` environment variable.
 Just type `echo $PS1` in your terminal and it will output something like `\h:\W \u\$`. You may say WTF?
-Take it easy! Manual explains all this staff (`man bash` PROMPTING section).
+Take it easy! Manual explains all this stuff (`man bash` PROMPTING section).
 
 | Character | Meaning                                 |
 |-----------|-----------------------------------------|
@@ -31,11 +31,11 @@ Take it easy! Manual explains all this staff (`man bash` PROMPTING section).
 ...
 
 
-Append text to PS1 variable
+Append text to PS1 environment variable
 ===========================
-So we should change the `PS1` variable to also display current git branch.
-Let's create a function that will output current git branch and append the function output to `PS1` variable.
-For that we should know next:
+So we should change the `PS1` environment variable to also display current git branch name.
+Let's create a function that will output current git branch name and append the function output to `PS1` variable.
+For that we should know that:
 - `(command)` construct is used to execute the command inside the brackets.
 - `$(command)`construct is used to execute the command inside the brackets AND return the output of that command.
 - `$VAR` is used to refer to `VAR` variable value inside the string.
@@ -53,11 +53,11 @@ PS1="$PS1 \$(current_git_branch) "
 {% endhighlight %}
 
 Now we have a stub `current_git_branch` function and result of this function is appended to
-`PS1` variable.
+`PS1` environment variable.
 
-Get the real current git branch
+Get the real current git branch name
 ============================
-For that we should know next:
+For that we should know that:
  - `|` is a pipe operator and it's used to direct the output of command placed before pipe operator to
  input of the command placed after pipe operator.
  The small example of `|` operator:
@@ -73,7 +73,7 @@ For that we should know next:
 
  
 
-Next step. You should know the `git branch` command. But the output is not acceptable for us.
+Let's continue. We all know `git branch` command. But the output is not acceptable for us.
 
 {% highlight bash %}
  04:13 PM:~/www/project $ git branch
@@ -83,7 +83,7 @@ Next step. You should know the `git branch` command. But the output is not accep
 * dev
 {% endhighlight %}
 
-We should transform this output to a `(dev)`.
+We should transform this output to just `(dev)`.
 
 The first step: 
 {% highlight bash %}
@@ -105,8 +105,8 @@ And now we can assign the output of these piped commands to a variable
 * dev
 {% endhighlight %}
 
-Neatpick!
-What if we will execute this command from directory that is not a part of git repository?
+Nitpick!
+What if we execute this command from directory that is not a part of git repository?
 
 {% highlight bash %}
  04:13 PM:~/www $ CURRENT_GIT_BRANCH=$(git branch | grep '^*' | colrm 1 2)
@@ -136,7 +136,7 @@ PS1="$PS1 \$(current_git_branch) "
 
 IF statement 
 ============
-But we also want to display round braces around current git branch and only when our branch output is not empty.
+But we also want to display round braces around current git branch name and only when our branch output is not empty.
 We need some conditional statement for this functionality. Here is the syntax:
 
 {% highlight bash %}
@@ -159,10 +159,10 @@ fi
 Colors!
 ========================
 
-We can also make the name of git branch yellow or green or whatever color you want (almost any).
+We can also make the name of git branch yellow or green or whatever color we want (almost any).
 To output text in color use the following syntax:
-`echo -e "\e[x;ym YOUR_TEXT \e[m"`
-Where,
+`echo -e "\e[x;ym YOUR_TEXT \e[m"` where
+
  - `-e` is a flag for echo command that turns on escape sequences output (colors are escape sequences)
  - `\e[` is used to begin the colors modifications
  - `x;y` is a color code to use
@@ -188,7 +188,7 @@ Where,
 | Cyan	   | 1;36  |
 | White	   | 1;37  |
 
-...
+[...](https://gist.github.com/chrisopedia/8754917)
 
 So we can rewrite the function like this: 
 
@@ -239,5 +239,3 @@ P.S
 ====
 It's great that we can customize prompt string by ourselves but there are already existing solutions with much more
 functionality. I use [this one](https://github.com/arialdomartini/oh-my-git) and very happy with it.
-Here is how it looks like:
-![Git prompt](/images/bash.png)

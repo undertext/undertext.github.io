@@ -102,7 +102,6 @@ And now we can assign the output of these piped commands to a variable
 
 {% highlight bash %}
  04:13 PM:~/www/project $ CURRENT_GIT_BRANCH=$(git branch | grep '^*' | colrm 1 2)
-* dev
 {% endhighlight %}
 
 Nitpick!
